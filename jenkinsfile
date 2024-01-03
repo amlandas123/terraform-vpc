@@ -1,0 +1,30 @@
+pipeline{
+    agent any
+    parameters {
+        // string(name: 'ENV', defaultValue: 'Mr Jenkins', description: 'Who should I say hello to?')
+        // text(name: 'BIOGRAPHY', defaultValue: '', description: 'Enter some information about the person')
+        // booleanParam(name: 'TOGGLE', defaultValue: true, description: 'Toggle this value')
+        choice(name: 'ENV', choices: ['dev', 'prod'], description: 'Select the Environment')
+        choice(name: 'ACTION', choices: ['apply', 'destroy'], description: 'Select the Action')
+        // password(name: 'PASSWORD', defaultValue: 'SECRET', description: 'Enter a password')
+    }
+    stages{
+        stage("Terraform init"){
+            steps{
+                sh "terraform init -backend-config=env-${ENV}/${ENV}-backend.tfvars"
+            }
+            
+        }
+        stage("Terraform plan"){
+            steps {
+                sh "terraform plan -var-file=${ENV}/${ENV}.tfvars"
+            }
+        }    
+        stage("Terraform apply"){
+            steps {
+                sh "terraform ${ACTION} -auto-approve -var-file=${ENV}/${ENV}.tfvars"
+            }
+        }
+    }
+    
+}    
