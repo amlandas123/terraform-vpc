@@ -2,6 +2,6 @@ module "vpc" {
   source        = "git::https://github.com/amlandas123/tf-module-vpc"
   ENV           = var.ENV
   VPC_CIDR      = var.VPC_CIDR
-  # PUBLIC_CIDR   = var.public_subnet_cidr
-  # PRIVATE_CIDR  = var.private_subnet_cidr
+  public_subnet_cidr   = var.public_subnet_cidr
+  private_subnet_cidr  = var.private_subnet_cidr
 }
