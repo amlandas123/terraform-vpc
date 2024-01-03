@@ -17,12 +17,12 @@ pipeline{
         }
         stage("Terraform plan"){
             steps {
-                sh "terraform plan -var-file=${ENV}/${ENV}.tfvars"
+                sh "terraform plan -var-file=env-${ENV}/${ENV}.tfvars"
             }
         }    
         stage("Terraform apply"){
             steps {
-                sh "terraform ${ACTION} -auto-approve -var-file=${ENV}/${ENV}.tfvars"
+                sh "terraform ${ACTION} -auto-approve -var-file=env-${ENV}/${ENV}.tfvars"
             }
         }
     }
