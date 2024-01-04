@@ -3,6 +3,6 @@ module "vpc" {
   source                = "./vendor/modules/vpc"
   ENV                   = var.ENV
   VPC_CIDR              = var.VPC_CIDR
-  public_subnet_cidr    = var.public_subnet_cidr
-  private_subnet_cidr   = var.private_subnet_cidr
+  PUBLIC_SUBNET_CIDR    = var.PUBLIC_SUBNET_CIDR
+  PRIVATE_SUBNET_CIDR   = var.PRIVATE_SUBNET_CIDR
 }
