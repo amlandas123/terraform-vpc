@@ -5,20 +5,20 @@ pipeline{
         // text(name: 'BIOGRAPHY', defaultValue: '', description: 'Enter some information about the person')
         // booleanParam(name: 'TOGGLE', defaultValue: true, description: 'Toggle this value')
         choice(name: 'ENV', choices: ['dev', 'prod'], description: 'Select the Environment')
-        choice(name: 'ACTION', choices: ['init', 'plan', 'apply', 'destroy'], description: 'Select the Action')
+        choice(name: 'ACTION', choices: ['apply', 'destroy'], description: 'Select the Action')
         // password(name: 'PASSWORD', defaultValue: 'SECRET', description: 'Enter a password')
     }
     stages{
         stage("Terraform init"){
             steps{
                 sh "terrafile -f env-dev/Terrafile"
-                sh "terraform ${ACTION} -backend-config=env-${ENV}/${ENV}-backend.tfvars"
+                sh "terraform init -backend-config=env-${ENV}/${ENV}-backend.tfvars"
             }
             
         }
         stage("Terraform plan"){
             steps {
-                sh "terraform ${ACTION} -var-file=env-${ENV}/${ENV}.tfvars"
+                sh "terraform plan -var-file=env-${ENV}/${ENV}.tfvars"
             }
         }    
         stage("Terraform apply"){
